@@ -3,13 +3,40 @@
 <WordCheck>:
     phrase: phrase
 
-    canvas:
+    canvas.before:
+        Color:
+            rgba: 0, .54, .54, 1
         Rectangle:
-            pos: self.center_x - 5, 0
-            size: 10, self.height
+            pos: self.pos
+            size: self.size
 
+    canvas:
+        Color:
+            rgb: 0.9, 0.9, 0.1
+        Line:
+            points: 100, root.top - 135, 600, root.top - 135
+
+    Label:
+        font_size: 26
+        center_x: root.width / 2
+        top: root.top
+        markup: True
+        text: "[u]WordCheck[/u]"
 
     TextInput:
         id: phrase
-        text: ""
+        text: "Podaj litery"
+        center_x: root.width / 5
+        top: root.top - 100
+        width: root.width * 2.35 / 4
+        height: 30
+
+        multiline: False
+
+        background_color: 0, .54, .54, 1
+        background_normal: ""
+        background_active: ""
+
+
+
 
