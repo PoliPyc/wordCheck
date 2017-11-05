@@ -2,52 +2,45 @@
 
 import itertools
 import sys
+from kivy.app import App
+from kivy.uix.widget import Widget
+from kivy.uix.textinput import TextInput
+from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
+from kivy.vector import Vector
+from kivy.clock import Clock
+from random import randint
 
-def perm(words, lenght):
-    perm = itertools.permutations(letters, lenght)
-    for item in perm:
-        perms.append(''.join(item))
+class wordCheck(Widget):
 
-    for word in words:
-        if word in perms:
-            print(word)
+    def perm(self, words, lenght, letters):
+        perms = []
+        perm = itertools.permutations(letters, lenght)
+        for item in perm:
+            perms.append(''.join(item))
 
-def getWords(letters, lenght):
-    file = open("slowa.txt", "r")
-    for line in file:
-        line = line.strip()
-        if len(line) == lenght and line[0] in letters:
-            yield line
+        for word in words:
+            if word in perms:
+                print(word)
 
+        return perms
 
-if(len(sys.argv) < 2):
-    print("wordCheck: Nie podano liter")
-else:
-    letters = list(sys.argv[1])
-    perms = []
-    print(letters)
-    print(type(letters))
-    print(len(letters))
+    def getWordsFromFile(self, letters, lenght):
+        file = open("slowa.txt", "r")
+        for line in file:
+            line = line.strip()
+            if len(line) == lenght and line[0] in letters:
+                yield line
 
-    if(len(sys.argv) < 3 or sys.argv[2] == '3'):
-        threeChars = getWords(letters, 3)
-        perm(threeChars, 3)
+    def getLetters(self, letters, length):
+        words = self.getWordsFromFile(letters, length)
+        return self.perm(words, length, letters)
 
-    if(len(sys.argv) < 3 or sys.argv[2] == '4'):
-        fourChars = getWords(letters, 4)
-        perm(fourChars, 4)
-
-    if(len(sys.argv) < 3 or sys.argv[2] == '5'):
-        fiveChars = getWords(letters, 5)
-        perm(fiveChars, 5)
-
-    if (len(sys.argv) < 3 or sys.argv[2] == '6'):
-        fiveChars = getWords(letters, 6)
-        perm(fiveChars, 6)
-
-    if (len(sys.argv) < 3 or sys.argv[2] == '7'):
-        fiveChars = getWords(letters, 7)
-        perm(fiveChars, 7)
+class WordCheckApp(App):
+    def build(self):
+        app = wordCheck()
+        app.getLetters('tyupe', 3)
+        return app
 
 
-    print('done')
+if __name__ == '__main__':
+    WordCheckApp().run()
