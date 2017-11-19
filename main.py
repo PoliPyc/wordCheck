@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 
+import gzip
 import itertools
 import sys
+
+WORDS_FILE = "words.dat"
 
 def perm(words, lenght):
     perm = itertools.permutations(letters, lenght)
@@ -13,9 +16,9 @@ def perm(words, lenght):
             print(word)
 
 def getWords(letters, lenght):
-    file = open("slowa.txt", "r")
+    file = gzip.open(WORDS_FILE, "rb")
     for line in file:
-        line = line.strip()
+        line = line.decode('utf-8').strip()
         if len(line) == lenght and line[0] in letters:
             yield line
 
