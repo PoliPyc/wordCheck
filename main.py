@@ -3,6 +3,8 @@
 import gzip
 import itertools
 import sys
+from time import time
+startTime = time()
 
 WORDS_FILE = "words.dat"
 
@@ -28,9 +30,6 @@ if(len(sys.argv) < 2):
 else:
     letters = list(sys.argv[1])
     perms = []
-    print(letters)
-    print(type(letters))
-    print(len(letters))
 
     if(len(sys.argv) < 3 or sys.argv[2] == '3'):
         threeChars = getWords(letters, 3)
@@ -54,3 +53,5 @@ else:
 
 
     print('done')
+
+print("Query took {0:.2f} seconds.".format(time() - startTime))
