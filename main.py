@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 
+import gzip
 import itertools
 import sys
+from time import time
+
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.textinput import TextInput
@@ -9,6 +12,10 @@ from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProper
 from kivy.vector import Vector
 from kivy.clock import Clock
 from random import randint
+
+startTime = time()
+
+WORDS_FILE = "words.dat"
 
 class wordCheck(Widget):
 
@@ -24,10 +31,10 @@ class wordCheck(Widget):
 
         return perms
 
-    def getWordsFromFile(self, letters, lenght):
-        file = open("slowa.txt", "r")
+    def getWordsFromFile(letters, lenght):
+        file = gzip.open(WORDS_FILE, "rb")
         for line in file:
-            line = line.strip()
+            line = line.decode('utf-8').strip()
             if len(line) == lenght and line[0] in letters:
                 yield line
 
@@ -41,6 +48,36 @@ class WordCheckApp(App):
         app.getLetters('tyupe', 3)
         return app
 
+if(len(sys.argv) < 2):
+    print("wordCheck: Nie podano liter")
+else:
+    letters = list(sys.argv[1])
+    perms = []
+
+    if(len(sys.argv) < 3 or sys.argv[2] == '3'):
+        threeChars = getWords(letters, 3)
+        perm(threeChars, 3)
+
+    if(len(sys.argv) < 3 or sys.argv[2] == '4'):
+        fourChars = getWords(letters, 4)
+        perm(fourChars, 4)
+
+    if(len(sys.argv) < 3 or sys.argv[2] == '5'):
+        fiveChars = getWords(letters, 5)
+        perm(fiveChars, 5)
+
+    if (len(sys.argv) < 3 or sys.argv[2] == '6'):
+        fiveChars = getWords(letters, 6)
+        perm(fiveChars, 6)
+
+    if (len(sys.argv) < 3 or sys.argv[2] == '7'):
+        fiveChars = getWords(letters, 7)
+        perm(fiveChars, 7)
+
+
+    print('done')
+
+print("Query took {0:.2f} seconds.".format(time() - startTime))
 
 if __name__ == '__main__':
     WordCheckApp().run()
