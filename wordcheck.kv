@@ -28,7 +28,7 @@
         text: "Podaj litery"
         center_x: root.width / 5
         top: root.top - 100
-        width: root.width * 2.35 / 4
+        width: root.width * 1.7 / 4
         height: 30
 
         multiline: False
@@ -37,6 +37,17 @@
         background_normal: ""
         background_active: ""
 
+    Button:
+        text: 'Wyszukaj'
+        on_press: root.printWords(phrase.text)
+        height: 30
+        top: root.top - 100
+        center_x: root.width - 100
 
+    Label:
+        id: results
+        center_x: root.width / 5
+        width: root.width * 1.7 / 4
+        text: root.results
 
 
